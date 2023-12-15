@@ -28,7 +28,7 @@ static lv_color_t buf[screenWidth * screenHeight / 10];
 TFT_eSPI tft = TFT_eSPI(screenWidth, screenHeight); /* TFT instance */
 
 #include "ui/ui.h"
-#include "touch.h"
+#include "drv/touch/driver.h"
 #include "xtouch/globals.h"
 
 bool xtouch_screen_touchFromPowerOff = false;
@@ -174,11 +174,11 @@ void xtouch_screen_setup()
 {
 
     ConsoleInfo.println("[XTouch][SCREEN] Setup");
-    pinMode(XPT2046_CS, OUTPUT);
+    pinMode(TOUCH_CS, OUTPUT);
     pinMode(TFT_CS, OUTPUT);
     pinMode(SD_CS, OUTPUT);
 
-    digitalWrite(XPT2046_CS, HIGH); // Touch controller chip select (if used)
+    digitalWrite(TOUCH_CS, HIGH); // Touch controller chip select (if used)
     digitalWrite(TFT_CS, HIGH);     // TFT screen chip select
     digitalWrite(SD_CS, HIGH);      // SD card chips select, must use GPIO 5 (ESP32 SS)
 
@@ -191,7 +191,7 @@ void xtouch_screen_setup()
     ledcSetup(LEDC_CHANNEL_0, LEDC_BASE_FREQ, LEDC_TIMER_12_BIT);
     ledcAttachPin(LCD_BACK_LIGHT_PIN, LEDC_CHANNEL_0);
 
-    x_touch_spi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
+    x_touch_spi.begin(TOUCH_SCLK, TOUCH_MISO, TOUCH_MOSI, TOUCH_CS);
     x_touch_touchScreen.begin(x_touch_spi);
 
     xtouch_screen_setupTFTFlip();
