@@ -15,7 +15,7 @@
 #if defined(__XTOUCH_SCREEN_28__)
 #include "devices/2.8/screen.h"
 #endif
- 
+
 #include "xtouch/pair.h"
 #include "xtouch/settings.h"
 #include "xtouch/net.h"
